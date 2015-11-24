@@ -1,0 +1,4 @@
+---
+profiles:
+  - tomcat
+  - demo_app
