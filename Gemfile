@@ -1,5 +1,5 @@
 source "https://rubygems.org"
 
-gem 'puppet', '3.8.4'
+gem 'puppet', '4.2.1'
 gem 'librarian-puppet'
 gem 'vagrant-wrapper'

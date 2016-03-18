@@ -16,9 +16,8 @@ Vagrant.configure('2') do |config|
   config.ssh.forward_agent = true
 
   config.vm.provision :puppet do |puppet|
-    puppet.manifests_path       = 'manifests'
-    puppet.module_path          = 'modules'
-    puppet.manifest_file        = ''
+    puppet.environment          = 'development'
+    puppet.environment_path     = 'environments'
     puppet.hiera_config_path    = 'hiera.yaml'
     puppet.options              = '--verbose'
     puppet.facter = {
