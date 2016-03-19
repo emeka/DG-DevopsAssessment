@@ -4,6 +4,14 @@ class demo_app {
     ensure => present
   }
 
+  package { 'mariadb':
+    ensure => present
+  }
+
+  package { 'mariadb-server':
+    ensure => present
+  }
+
   file { '/etc/default/demo':
     ensure  => file,
     source  => 'puppet:///modules/demo_app/demo.environment',
@@ -40,6 +48,12 @@ class demo_app {
         '/usr/local/lib/demo/demo.war',
         '/usr/lib/systemd/system/demo.service',
         '/etc/default/demo']
+  }
+
+  service { 'mariadb':
+    ensure => running,
+    enable => true,
+    require => Package['mariadb-server']
   }
 
 }
