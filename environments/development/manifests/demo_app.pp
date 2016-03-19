@@ -32,6 +32,14 @@ class demo_app {
     group   => 'root'
   }
 
+  file { '/usr/local/lib/demo/data.sql':
+    ensure  => file,
+    source  => 'puppet:///modules/demo_app/data.sql',
+    mode    => '0644',
+    owner   => 'root',
+    group   => 'root'
+  }
+
   file { '/usr/lib/systemd/system/demo.service':
     ensure => file,
     source => 'puppet:///modules/demo_app/demo.service',
@@ -54,6 +62,12 @@ class demo_app {
     ensure => running,
     enable => true,
     require => Package['mariadb-server']
+  }
+
+  exec { 'init_database':
+    unless  => "/usr/bin/test $( mysql -N -B -e \"show tables from test like 'test' ;\"  )",
+    command => "/usr/bin/mysql < /usr/local/lib/demo/data.sql",
+    require => [Package['mariadb'], Service['mariadb']]
   }
 
 }

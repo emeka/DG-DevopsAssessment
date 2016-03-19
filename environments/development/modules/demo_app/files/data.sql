@@ -1,8 +1,8 @@
-CREATE DATABASE test;
+CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
-CREATE TABLE test ( record VARCHAR(50) );
+CREATE TABLE IF NOT EXISTS test ( record VARCHAR(50) );
 
 INSERT INTO test (record) VALUES ("SOLERA");
 INSERT INTO test (record) VALUES ("CHALLENGE");
