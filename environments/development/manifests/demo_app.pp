@@ -87,7 +87,10 @@ class demo_app {
   service { 'healthcheck':
     ensure => running,
     enable => true,
-    subscribe => File['/usr/lib/systemd/system/healthcheck.service']
+    subscribe => File[
+        '/usr/lib/systemd/system/healthcheck.service',
+        '/usr/local/lib/demo/healthcheck.sh' 
+    ]
   }
 
   service { 'mariadb':
