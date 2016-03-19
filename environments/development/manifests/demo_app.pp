@@ -1,5 +1,10 @@
 class demo_app {
 
+  file { '/etc/yum.repos.d/nginx.repo':
+    ensure => file,
+    source => 'puppet:///modules/demo_app/nginx.repo'
+  }
+
   package { 'java':
     ensure => present
   }
@@ -10,6 +15,11 @@ class demo_app {
 
   package { 'mariadb-server':
     ensure => present
+  }
+
+  package { 'nginx':
+    ensure  => present,
+    require => File['/etc/yum.repos.d/nginx.repo']
   }
 
   file { '/etc/default/demo':
@@ -70,4 +80,15 @@ class demo_app {
     require => [Package['mariadb'], Service['mariadb']]
   }
 
+  file { '/etc/nginx/conf.d/default.conf':
+    ensure => present,
+    backup => true,
+    source => 'puppet:///modules/demo_app/nginx.conf'
+  }
+
+  service { 'nginx':
+    ensure => running,
+    enable => true,
+    require => [Package['nginx'],File['/etc/nginx/conf.d/default.conf']]
+  }
 }
