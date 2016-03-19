@@ -68,6 +68,28 @@ class demo_app {
         '/etc/default/demo']
   }
 
+  file { '/usr/local/lib/demo/healthcheck.sh':
+    ensure  => file,
+    source  => 'puppet:///modules/demo_app/healthcheck.sh',
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root'
+  }
+
+  file { '/usr/lib/systemd/system/healthcheck.service':
+    ensure => file,
+    source => 'puppet:///modules/demo_app/healthcheck.service',
+    mode => '0644',
+    owner => 'root',
+    group => 'root'
+  }
+
+  service { 'healthcheck':
+    ensure => running,
+    enable => true,
+    subscribe => File['/usr/lib/systemd/system/healthcheck.service']
+  }
+
   service { 'mariadb':
     ensure => running,
     enable => true,
@@ -90,5 +112,9 @@ class demo_app {
     ensure => running,
     enable => true,
     require => [Package['nginx'],File['/etc/nginx/conf.d/default.conf']]
+  }
+
+  file { '/var/run/demo':
+    ensure => directory;
   }
 }
