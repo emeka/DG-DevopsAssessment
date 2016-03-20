@@ -5,3 +5,4 @@ After=network.target
 [Service]
 EnvironmentFile=/etc/default/demo
 ExecStart=/bin/java -jar /usr/local/lib/demo/demo.war 
+Restart=always

@@ -1,3 +1,8 @@
 ---
 profiles:
-  - demo_app
+    - database
+    - demo_app
+    - reverse_proxy 
+    - firewall
+    
+

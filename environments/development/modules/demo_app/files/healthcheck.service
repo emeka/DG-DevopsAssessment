@@ -5,3 +5,4 @@ After=demo.service
 [Service]
 EnvironmentFile=/etc/default/demo
 ExecStart=/usr/local/lib/demo/healthcheck.sh 
+Restart=always
